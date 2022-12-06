@@ -1,10 +1,13 @@
 package com.mattborle.cupsarsenal;
 
+import com.mattborle.cupsarsenal.init.EntityInit;
+import com.mattborle.cupsarsenal.init.ItemInit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -20,16 +23,15 @@ import java.util.stream.Collectors;
 @Mod("cupsarsenal")
 public class CupsArsenal
 {
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static boolean debugMode = true;
+    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final String MOD_ID = "cupsarsenal";
     public CupsArsenal()
     {
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-        // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-        // Register ourselves for server and other game events we are interested in
+        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addListener(this::setup);
+        ItemInit.ITEMS.register(modEventBus);
+        EntityInit.ENTITY_TYPES.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -39,6 +41,7 @@ public class CupsArsenal
         LOGGER.info("Cup's Arsenal - Cup, et al.");
     }
 
+    /*  Everything below is leftovers from example file, keeping for future reference if needed
     private void enqueueIMC(final InterModEnqueueEvent event)
     {
         // Some example code to dispatch IMC to another mod
@@ -73,4 +76,5 @@ public class CupsArsenal
             // LOGGER.info("HELLO from Register Block");
         }
     }
+    */
 }
