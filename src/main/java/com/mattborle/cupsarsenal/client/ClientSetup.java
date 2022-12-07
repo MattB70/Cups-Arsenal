@@ -1,7 +1,6 @@
 package com.mattborle.cupsarsenal.client;
 
 import com.mattborle.cupsarsenal.CupsArsenal;
-import com.mattborle.cupsarsenal.entities.RodArrowEntity;
 import com.mattborle.cupsarsenal.init.EntityInit;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
