@@ -71,8 +71,8 @@ public class BlazeRodArrowEntity extends AbstractArrow{
     @Override
     public void tick(){
         super.tick();
-        level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0f, 0.0f, 0.0f);
-        level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), 0.0f, 0.0f, 0.0f);
+        level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0f, 0.05f, 0.0f);
+        level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0f, 0.08f, 0.0f);
     }
     @Override
     public Packet<?> getAddEntityPacket(){
