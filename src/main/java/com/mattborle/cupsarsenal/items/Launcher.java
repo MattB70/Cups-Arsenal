@@ -27,8 +27,16 @@ public class Launcher extends Item {
             BlazeRodArrowEntity arrow = new BlazeRodArrowEntity(EntityInit.EXPLOSIVE_ARROW.get(), player, player.level);
             arrow.setDeltaMovement(vec3.x*velocity, vec3.y*velocity, vec3.z*velocity); // shoot in the direction the player is looking
             player.level.addFreshEntity(arrow);
-            player.level.playSound(null, player.blockPosition(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.blaze.shoot")), SoundSource.BLOCKS, 0.8f, 1.4f);
-            player.level.playSound(null, player.blockPosition(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.crossbow.shoot")), SoundSource.BLOCKS, 1.0f, 0.8f);
+            player.level.playSound(null, player.blockPosition(),
+                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.blaze.shoot")),
+                    SoundSource.BLOCKS,
+                    0.8f,
+                    1.4f);
+            player.level.playSound(null, player.blockPosition(),
+                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.crossbow.shoot")),
+                    SoundSource.BLOCKS,
+                    1.0f,
+                    0.8f);
         }
         return super.use(world, player, hand);
     }
