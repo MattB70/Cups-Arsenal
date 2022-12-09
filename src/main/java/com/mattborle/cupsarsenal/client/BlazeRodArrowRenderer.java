@@ -6,10 +6,10 @@ import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-public class RodArrowRenderer extends ArrowRenderer<BlazeRodArrowEntity> {
+public class BlazeRodArrowRenderer extends ArrowRenderer<BlazeRodArrowEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(CupsArsenal.MOD_ID, "textures/entity/rod_arrow.png");
 
-    public RodArrowRenderer(EntityRendererProvider.Context manager) {
+    public BlazeRodArrowRenderer(EntityRendererProvider.Context manager) {
         super(manager);
     }
 
