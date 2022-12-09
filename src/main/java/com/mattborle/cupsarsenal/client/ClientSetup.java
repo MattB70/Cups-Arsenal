@@ -12,6 +12,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientSetup {
     @SubscribeEvent
     public static void doSetup(FMLClientSetupEvent event) {
-        EntityRenderers.register(EntityInit.EXPLOSIVE_ARROW.get(), BlazeRodArrowRenderer::new);
+        EntityRenderers.register(EntityInit.BLAZEROD_ARROW.get(), BlazeRodArrowRenderer::new);
+        EntityRenderers.register(EntityInit.ENDROD_ARROW.get(), EndRodArrowRenderer::new);
+        EntityRenderers.register(EntityInit.LEADROD_ARROW.get(), LeadRodArrowRenderer::new);
+        EntityRenderers.register(EntityInit.URANIUMROD_ARROW.get(), UraniumRodArrowRenderer::new);
     }
 }
