@@ -1,7 +1,9 @@
 package com.mattborle.cupsarsenal.entities;
 
+import com.ibm.icu.text.MessagePattern;
 import com.mattborle.cupsarsenal.CupsArsenal;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
@@ -39,10 +41,12 @@ BlazeRodArrowEntity Extends AbstractArrow; an explosive projectile to be fired o
 public class BlazeRodArrowEntity extends AbstractArrow{
 
     // ADJUSTERS === Change these to edit stats ========================================================================
-    private static final float  DMG_DIRECT_IMPACT = 20.0f;          // Damage to apply to entities upon impact
+    private static final float  DMG_DIRECT_IMPACT = 16.0f;          // Damage to apply to entities upon impact
     private static final float  DMG_EXPLOSION_SIZE = 3.2f;          // Size of AEO damage causing explosion
     private static final float  FIRE_BREAK_EXPLOSION_SIZE = 1.0f;   // Size of block breaking/fire starting explosion
     private static final int    EXPLOSION_DELAY = 60;               // Ticks until the rod explodes when stuck in ground
+    private static final ParticleOptions FLAME_PARTICLE = ParticleTypes.FLAME;
+    private static final ParticleOptions SMOKE_PARTICLE = ParticleTypes.CAMPFIRE_COSY_SMOKE;
 
     // CONSTRUCTORS ====================================================================================================
     public BlazeRodArrowEntity(EntityType<BlazeRodArrowEntity> entityType, Level world){
@@ -87,7 +91,7 @@ public class BlazeRodArrowEntity extends AbstractArrow{
         super.tick();
         Random r = new Random();
         if (EXPLOSION_DELAY - this.inGroundTime <= 20){ // "about to explode" fire spray
-            level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(),
+            level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
                     -0.15f + r.nextFloat() * (0.3f),
                     0.2f,
                     -0.15f + r.nextFloat() * (0.3f));
@@ -97,11 +101,11 @@ public class BlazeRodArrowEntity extends AbstractArrow{
                     0.5f-(this.inGroundTime/EXPLOSION_DELAY),
                     (float)this.inGroundTime/EXPLOSION_DELAY);
         } else {
-            level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(),
+            level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
                     -0.04f + r.nextFloat() * (0.08f),
                     0.05f,
                     -0.04f + r.nextFloat() * (0.08f));
-            level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(),
+            level.addParticle(SMOKE_PARTICLE, this.getX(), this.getY(), this.getZ(),
                     -0.04f + r.nextFloat() * (0.08f),
                     0.08f,
                     -0.04f + r.nextFloat() * (0.08f));
@@ -179,25 +183,15 @@ public class BlazeRodArrowEntity extends AbstractArrow{
                 Random r = new Random();
                 // particle, x, y, z, vx, vy, vz
                 // Flames
-                level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(),
+                level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
                         vScale * (-0.1f + r.nextFloat() * (0.2f)),
                         vScale * (-0.1f + r.nextFloat() * (0.2f)),
                         vScale * (-0.1f + r.nextFloat() * (0.2f)));
                 // Smoke
-                level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(),
+                level.addParticle(SMOKE_PARTICLE, this.getX(), this.getY(), this.getZ(),
                         vScale * (-0.15f + r.nextFloat() * (0.3f)),
                         vScale * (-0.15f + r.nextFloat() * (0.3f)),
                         vScale * (-0.15f + r.nextFloat() * (0.3f)));
-                // Ash from above
-                level.addParticle(ParticleTypes.ASH, this.getX(), this.getY()+1, this.getZ(),
-                        vScale * (-0.005f + r.nextFloat() * (0.01f)),
-                        vScale * (-0.1f + r.nextFloat() * (-0.01f)),
-                        vScale * (-0.005f + r.nextFloat() * (0.01f)));
-                // Ash at impact location
-                level.addParticle(ParticleTypes.ASH, this.getX(), this.getY(), this.getZ(),
-                        vScale * (-0.005f + r.nextFloat() * (0.01f)),
-                        vScale * (-0.1f + r.nextFloat() * (-0.01f)),
-                        vScale * (-0.005f + r.nextFloat() * (0.01f)));
             }
         }
     }

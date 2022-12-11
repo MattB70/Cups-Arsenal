@@ -1,6 +1,7 @@
 package com.mattborle.cupsarsenal.items;
 
 import com.mattborle.cupsarsenal.entities.BlazeRodArrowEntity;
+import com.mattborle.cupsarsenal.entities.UraniumRodArrowEntity;
 import com.mattborle.cupsarsenal.init.EntityInit;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -24,7 +25,7 @@ public class Launcher extends Item {
         float velocity = 3.0f;
         // Create a projectile entity and shoot it
         if (!player.level.isClientSide()){
-            BlazeRodArrowEntity arrow = new BlazeRodArrowEntity(EntityInit.BLAZEROD_ARROW.get(), player, player.level);
+            UraniumRodArrowEntity arrow = new UraniumRodArrowEntity(EntityInit.URANIUMROD_ARROW.get(), player, player.level);
             arrow.setDeltaMovement(vec3.x*velocity, vec3.y*velocity, vec3.z*velocity); // shoot in the direction the player is looking
             player.level.addFreshEntity(arrow);
             player.level.playSound(null, player.blockPosition(),
