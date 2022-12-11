@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -51,8 +52,7 @@ public class LeadRodArrowEntity extends AbstractArrow{
     // METHODS =========================================================================================================
     @Override
     protected ItemStack getPickupItem(){
-        //return new ItemStack(Items.BLAZE_ROD);
-        return ItemStack.EMPTY;
+        return new ItemStack(Items.IRON_INGOT); // TODO: replace with lead rod item from mod
     }
     @Override
     protected void onHitEntity(EntityHitResult ray){
@@ -73,10 +73,12 @@ public class LeadRodArrowEntity extends AbstractArrow{
         super.tick();
         // Flames
         Random r = new Random();
-        level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
-                (-0.1f + r.nextFloat() * (0.2f)),
-                (-0.1f + r.nextFloat() * (0.2f)),
-                (-0.1f + r.nextFloat() * (0.2f)));
+        if(!this.inGround){ // Display particles whilst flying
+            level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
+                    (-0.1f + r.nextFloat() * (0.2f)),
+                    (-0.1f + r.nextFloat() * (0.2f)),
+                    (-0.1f + r.nextFloat() * (0.2f)));
+        }
     }
     @Override
     public Packet<?> getAddEntityPacket(){
