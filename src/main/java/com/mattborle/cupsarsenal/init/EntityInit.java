@@ -15,13 +15,13 @@ import net.minecraftforge.registries.RegistryObject;
 public class EntityInit {
     public static DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, CupsArsenal.MOD_ID);
 
-    public static final RegistryObject<EntityType<BlazeRodArrowEntity>> BLAZEROD_ARROW = ENTITY_TYPES.register("rod_arrow",
+    public static final RegistryObject<EntityType<BlazeRodArrowEntity>> BLAZEROD_ARROW = ENTITY_TYPES.register("blazerod_arrow",
             () -> EntityType.Builder.of((EntityType.EntityFactory<BlazeRodArrowEntity>) BlazeRodArrowEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("rod_arrow"));
-    public static final RegistryObject<EntityType<EndRodArrowEntity>> ENDROD_ARROW = ENTITY_TYPES.register("rod_arrow",
+    public static final RegistryObject<EntityType<EndRodArrowEntity>> ENDROD_ARROW = ENTITY_TYPES.register("endrod_arrow",
             () -> EntityType.Builder.of((EntityType.EntityFactory<EndRodArrowEntity>) EndRodArrowEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("rod_arrow"));
-    public static final RegistryObject<EntityType<LeadRodArrowEntity>> LEADROD_ARROW = ENTITY_TYPES.register("rod_arrow",
+    public static final RegistryObject<EntityType<LeadRodArrowEntity>> LEADROD_ARROW = ENTITY_TYPES.register("leadrod_arrow",
             () -> EntityType.Builder.of((EntityType.EntityFactory<LeadRodArrowEntity>) LeadRodArrowEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("rod_arrow"));
-    public static final RegistryObject<EntityType<UraniumRodArrowEntity>> URANIUMROD_ARROW = ENTITY_TYPES.register("rod_arrow",
+    public static final RegistryObject<EntityType<UraniumRodArrowEntity>> URANIUMROD_ARROW = ENTITY_TYPES.register("uraniumrod_arrow",
             () -> EntityType.Builder.of((EntityType.EntityFactory<UraniumRodArrowEntity>) UraniumRodArrowEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("rod_arrow"));
 
 }

@@ -63,13 +63,16 @@ public class BlazeRodArrowEntity extends AbstractArrow{
     }
     @Override
     protected void onHitEntity(EntityHitResult ray){
-        // play additional "piercing" sound
-        ray.getEntity().hurt(DamageSource.GENERIC, DMG_DIRECT_IMPACT); // Damage entity with direct impact
-        explode();
+        playEffects(8, 1.0f, true);
+        // Set the entity of fire for 10 seconds.
+        ray.getEntity().setSecondsOnFire(10);
+        // Damage entity with direct impact
+        ray.getEntity().hurt(DamageSource.GENERIC, DMG_DIRECT_IMPACT);
+        //this.discard(); skip the discard, allow the rod to continue piercing entities until it rests at a block.
     }
     @Override
     protected void onHitBlock(BlockHitResult ray){
-        playEffects(8, 1.0f);
+        playEffects(8, 1.0f, false);
         super.onHitBlock(ray); // stick in block
     }
     @Override
@@ -135,56 +138,67 @@ public class BlazeRodArrowEntity extends AbstractArrow{
         }
     }
     //                       if entity hit,      velocity scalar
-    private void playEffects(int numParticlesSets, float vScale){
-        // null, x, y, z, sound, source, volume, pitch
-        level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
-                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.creeper.primed")),
-                SoundSource.PLAYERS,
-                0.8f,
-                0.5f);
-        level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
-                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.burn")),
-                SoundSource.PLAYERS,
-                0.8f,
-                0.8f);
-        // Play entity pierced sound
-        level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
-                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.strong")),
-                SoundSource.PLAYERS,
-                0.8f,
-                1.0f);
-        for(int i = 0; i < numParticlesSets; i++){
-            Random r = new Random();
-            // Entity hit particles
-            level.addParticle(ParticleTypes.ENCHANTED_HIT, this.getX(), this.getY(), this.getZ(),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)));
+    private void playEffects(int numParticlesSets, float vScale, boolean hitEntity){
+        // If the rod pierced and entity, play these effects and skip the rest
+        if(hitEntity){
+            // Play entity pierced sounds
+            level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
+                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.strong")),
+                    SoundSource.PLAYERS,
+                    0.8f,
+                    1.0f);
+            level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
+                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.burn")),
+                    SoundSource.PLAYERS,
+                    0.8f,
+                    0.8f);
+            for(int i = 0; i < numParticlesSets; i++){
+                Random r = new Random();
+                // Entity hit particles
+                level.addParticle(ParticleTypes.ENCHANTED_HIT, this.getX(), this.getY(), this.getZ(),
+                        vScale * (-1f + r.nextFloat() * (2f)),
+                        vScale * (-1f + r.nextFloat() * (2f)),
+                        vScale * (-1f + r.nextFloat() * (2f)));
+            }
         }
-        // spawn particles with random vectors
-        for(int i = 0; i < numParticlesSets; i++){
-            Random r = new Random();
-            // particle, x, y, z, vx, vy, vz
-            // Flames
-            level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)));
-            // Smoke
-            level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(),
-                    vScale * (-0.15f + r.nextFloat() * (0.3f)),
-                    vScale * (-0.15f + r.nextFloat() * (0.3f)),
-                    vScale * (-0.15f + r.nextFloat() * (0.3f)));
-            // Ash from above
-            level.addParticle(ParticleTypes.ASH, this.getX(), this.getY()+1, this.getZ(),
-                    vScale * (-0.005f + r.nextFloat() * (0.01f)),
-                    vScale * (-0.1f + r.nextFloat() * (-0.01f)),
-                    vScale * (-0.005f + r.nextFloat() * (0.01f)));
-            // Ash at impact location
-            level.addParticle(ParticleTypes.ASH, this.getX(), this.getY(), this.getZ(),
-                    vScale * (-0.005f + r.nextFloat() * (0.01f)),
-                    vScale * (-0.1f + r.nextFloat() * (-0.01f)),
-                    vScale * (-0.005f + r.nextFloat() * (0.01f)));
+        // If the rod did not pierce an entity, play these effects
+        else{
+            // null, x, y, z, sound, source, volume, pitch
+            level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
+                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.creeper.primed")),
+                    SoundSource.PLAYERS,
+                    0.8f,
+                    0.5f);
+            level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
+                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.burn")),
+                    SoundSource.PLAYERS,
+                    0.8f,
+                    0.8f);
+            // spawn particles with random vectors
+            for(int i = 0; i < numParticlesSets; i++){
+                Random r = new Random();
+                // particle, x, y, z, vx, vy, vz
+                // Flames
+                level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(),
+                        vScale * (-0.1f + r.nextFloat() * (0.2f)),
+                        vScale * (-0.1f + r.nextFloat() * (0.2f)),
+                        vScale * (-0.1f + r.nextFloat() * (0.2f)));
+                // Smoke
+                level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(),
+                        vScale * (-0.15f + r.nextFloat() * (0.3f)),
+                        vScale * (-0.15f + r.nextFloat() * (0.3f)),
+                        vScale * (-0.15f + r.nextFloat() * (0.3f)));
+                // Ash from above
+                level.addParticle(ParticleTypes.ASH, this.getX(), this.getY()+1, this.getZ(),
+                        vScale * (-0.005f + r.nextFloat() * (0.01f)),
+                        vScale * (-0.1f + r.nextFloat() * (-0.01f)),
+                        vScale * (-0.005f + r.nextFloat() * (0.01f)));
+                // Ash at impact location
+                level.addParticle(ParticleTypes.ASH, this.getX(), this.getY(), this.getZ(),
+                        vScale * (-0.005f + r.nextFloat() * (0.01f)),
+                        vScale * (-0.1f + r.nextFloat() * (-0.01f)),
+                        vScale * (-0.005f + r.nextFloat() * (0.01f)));
+            }
         }
     }
 }
