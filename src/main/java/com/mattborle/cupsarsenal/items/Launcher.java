@@ -24,7 +24,7 @@ public class Launcher extends Item {
         float velocity = 3.0f;
         // Create a projectile entity and shoot it
         if (!player.level.isClientSide()){
-            BlazeRodArrowEntity arrow = new BlazeRodArrowEntity(EntityInit.EXPLOSIVE_ARROW.get(), player, player.level);
+            BlazeRodArrowEntity arrow = new BlazeRodArrowEntity(EntityInit.BLAZEROD_ARROW.get(), player, player.level);
             arrow.setDeltaMovement(vec3.x*velocity, vec3.y*velocity, vec3.z*velocity); // shoot in the direction the player is looking
             player.level.addFreshEntity(arrow);
             player.level.playSound(null, player.blockPosition(),
