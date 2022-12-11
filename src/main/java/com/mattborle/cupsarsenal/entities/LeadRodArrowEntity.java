@@ -10,6 +10,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -52,16 +53,17 @@ public class LeadRodArrowEntity extends AbstractArrow{
     // METHODS =========================================================================================================
     @Override
     protected ItemStack getPickupItem(){
-        return new ItemStack(Items.IRON_INGOT); // TODO: replace with lead rod item from mod
+        return new ItemStack(Items.IRON_INGOT); // TODO: replace with lead rod item from mod, and enable pickup.
     }
     @Override
     protected void onHitEntity(EntityHitResult ray){
-        // play additional "piercing" sound
+        // play additional "piercing" effects
+        playEffects(8, 1.0f, true);
         ray.getEntity().hurt(DamageSource.GENERIC, DMG_DIRECT_IMPACT); // Damage entity with direct impact
     }
     @Override
     protected void onHitBlock(BlockHitResult ray){
-        playEffects(8, 1.0f);
+        playEffects(8, 1.0f, false);
         super.onHitBlock(ray); // stick in block
     }
     @Override
@@ -87,46 +89,39 @@ public class LeadRodArrowEntity extends AbstractArrow{
 
     // HELPERS =========================================================================================================
     //                       if entity hit,      velocity scalar
-    private void playEffects(int numParticlesSets, float vScale){
+    private void playEffects(int numParticlesSets, float vScale, boolean hitEntity){
         // null, x, y, z, sound, source, volume, pitch
-        level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
-                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.creeper.primed")),
-                SoundSource.PLAYERS,
-                0.8f,
-                0.5f);
-        level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
-                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.burn")),
-                SoundSource.PLAYERS,
-                0.8f,
-                0.8f);
-        // Play entity pierced sound
-        level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
-                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.strong")),
-                SoundSource.PLAYERS,
-                0.8f,
-                1.0f);
-        for(int i = 0; i < numParticlesSets; i++){
-            Random r = new Random();
-            // Entity hit particles
-            level.addParticle(ParticleTypes.ENCHANTED_HIT, this.getX(), this.getY(), this.getZ(),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)));
-        }
-        // spawn particles with random vectors
-        for(int i = 0; i < numParticlesSets; i++){
-            Random r = new Random();
-            // particle, x, y, z, vx, vy, vz
-            // Flames
-            level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)),
-                    vScale * (-0.1f + r.nextFloat() * (0.2f)));
-            // Smoke
-            level.addParticle(SMOKE_PARTICLE, this.getX(), this.getY(), this.getZ(),
-                    vScale * (-0.15f + r.nextFloat() * (0.3f)),
-                    vScale * (-0.15f + r.nextFloat() * (0.3f)),
-                    vScale * (-0.15f + r.nextFloat() * (0.3f)));
+        if(hitEntity){
+            // Play entity pierced sound
+            level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
+                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.strong")),
+                    SoundSource.PLAYERS,
+                    0.8f,
+                    1.0f);
+            for(int i = 0; i < numParticlesSets; i++){
+                Random r = new Random();
+                // Entity hit particles
+                level.addParticle(ParticleTypes.ENCHANTED_HIT, this.getX(), this.getY(), this.getZ(),
+                        vScale * (-0.3f + r.nextFloat() * (0.6f)),
+                        vScale * (-0.3f + r.nextFloat() * (0.6f)),
+                        vScale * (-0.3f + r.nextFloat() * (0.6f)));
+            }
+        }else{
+            // spawn particles with random vectors
+            for(int i = 0; i < numParticlesSets; i++){
+                Random r = new Random();
+                // particle, x, y, z, vx, vy, vz
+                // Flames
+                level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
+                        vScale * (-0.1f + r.nextFloat() * (0.2f)),
+                        vScale * (-0.1f + r.nextFloat() * (0.2f)),
+                        vScale * (-0.1f + r.nextFloat() * (0.2f)));
+                // Smoke
+                level.addParticle(SMOKE_PARTICLE, this.getX(), this.getY(), this.getZ(),
+                        vScale * (-0.15f + r.nextFloat() * (0.3f)),
+                        vScale * (-0.15f + r.nextFloat() * (0.3f)),
+                        vScale * (-0.15f + r.nextFloat() * (0.3f)));
+            }
         }
     }
 }

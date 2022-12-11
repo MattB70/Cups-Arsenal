@@ -92,7 +92,7 @@ public class UraniumRodArrowEntity extends AbstractArrow{
         if (DECAY_DELAY - this.inGroundTime <= 40){ // "about to explode" fire spray
             level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
                     -0.15f + r.nextFloat() * (0.3f),
-                    0.2f,
+                    0.3f,
                     -0.15f + r.nextFloat() * (0.3f));
             level.playSound(null, new BlockPos(this.getX(), this.getY(), this.getZ()),
                     ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.burn")),
@@ -101,13 +101,13 @@ public class UraniumRodArrowEntity extends AbstractArrow{
                     (float)this.inGroundTime/DECAY_DELAY);
         } else {
             level.addParticle(FLAME_PARTICLE, this.getX(), this.getY(), this.getZ(),
-                    -0.06f + r.nextFloat() * (0.12f),
-                    0.05f,
-                    -0.06f + r.nextFloat() * (0.12f));
+                    -0.1f + r.nextFloat() * (0.2f),
+                    0.1f,
+                    -0.1f + r.nextFloat() * (0.2f));
             level.addParticle(SMOKE_PARTICLE, this.getX(), this.getY(), this.getZ(),
-                    -0.06f + r.nextFloat() * (0.12f),
-                    0.08f,
-                    -0.06f + r.nextFloat() * (0.12f));
+                    -0.1f + r.nextFloat() * (0.2f),
+                    0.2f,
+                    -0.1f + r.nextFloat() * (0.2f));
         }
     }
     @Override
