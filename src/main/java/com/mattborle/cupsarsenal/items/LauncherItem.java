@@ -1,10 +1,7 @@
 package com.mattborle.cupsarsenal.items;
 
-import com.mattborle.cupsarsenal.entities.BlazeRodArrowEntity;
 import com.mattborle.cupsarsenal.entities.EndRodArrowEntity;
-import com.mattborle.cupsarsenal.entities.LeadRodArrowEntity;
-import com.mattborle.cupsarsenal.entities.UraniumRodArrowEntity;
-import com.mattborle.cupsarsenal.init.EntityInit;
+import com.mattborle.cupsarsenal.registry.EntityRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -16,8 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class Launcher extends Item {
-    public Launcher(Properties properties) {
+public class LauncherItem extends Item {
+    public LauncherItem(Properties properties) {
         super(properties);
     }
     @Override
@@ -27,7 +24,7 @@ public class Launcher extends Item {
         float velocity = 3.0f;
         // Create a projectile entity and shoot it
         if (!player.level.isClientSide()){
-            EndRodArrowEntity arrow = new EndRodArrowEntity(EntityInit.ENDROD_ARROW.get(), player, player.level);
+            EndRodArrowEntity arrow = new EndRodArrowEntity(EntityRegistry.ENDROD_ARROW.get(), player, player.level);
             arrow.setDeltaMovement(vec3.x*velocity, vec3.y*velocity, vec3.z*velocity); // shoot in the direction the player is looking
             player.level.addFreshEntity(arrow);
             player.level.playSound(null, player.blockPosition(),

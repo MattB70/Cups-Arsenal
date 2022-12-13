@@ -1,7 +1,7 @@
-package com.mattborle.cupsarsenal.init;
+package com.mattborle.cupsarsenal.registry;
 
 import com.mattborle.cupsarsenal.CupsArsenal;
-import com.mattborle.cupsarsenal.items.Launcher;
+import com.mattborle.cupsarsenal.items.LauncherItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 // Item registration using ReferredRegister. Items are initialized here as to avoid the hassle of static referencing.
-public class ItemInit {
+public class ItemRegistry {
     // Create a Creative Mode menu tab for this mod
     public static class CreativeTab extends CreativeModeTab {
         private CreativeTab(int index, String label) {
@@ -29,5 +29,5 @@ public class ItemInit {
 
     // Register Rod Launcher with id rod_launcher and reference ROD_LAUNCHER.
     public static final RegistryObject<Item> ROD_LAUNCHER = ITEMS.register("rod_launcher",
-            () -> new Launcher(new Item.Properties().tab(CreativeTab.instance)));
+            () -> new LauncherItem(new Item.Properties().tab(CreativeTab.instance)));
 }

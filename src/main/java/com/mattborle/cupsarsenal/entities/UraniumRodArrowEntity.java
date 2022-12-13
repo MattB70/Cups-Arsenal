@@ -1,8 +1,6 @@
 package com.mattborle.cupsarsenal.entities;
 
-import com.ibm.icu.text.MessagePattern;
-import com.mattborle.cupsarsenal.CupsArsenal;
-import com.mattborle.cupsarsenal.init.EntityInit;
+import com.mattborle.cupsarsenal.registry.EntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -10,25 +8,16 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.List;
 import java.util.Random;
 
 /*
@@ -122,7 +111,7 @@ public class UraniumRodArrowEntity extends AbstractArrow{
             double y = this.getY();
             double z = this.getZ();
             this.discard(); // discard uranium rod
-            LeadRodArrowEntity leadRod = new LeadRodArrowEntity(EntityInit.LEADROD_ARROW.get(), x,y,z, this.level);
+            LeadRodArrowEntity leadRod = new LeadRodArrowEntity(EntityRegistry.LEADROD_ARROW.get(), x,y,z, this.level);
             leadRod.setDeltaMovement(0,0,0); // no movement.
             level.addFreshEntity(leadRod); // replace uranium rod with lead rod (decayed)
         }

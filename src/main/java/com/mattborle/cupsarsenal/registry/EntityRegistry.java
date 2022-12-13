@@ -1,4 +1,4 @@
-package com.mattborle.cupsarsenal.init;
+package com.mattborle.cupsarsenal.registry;
 
 import com.mattborle.cupsarsenal.CupsArsenal;
 import com.mattborle.cupsarsenal.entities.BlazeRodArrowEntity;
@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 // Entity registration using ReferredRegister. Entities are initialized here as to avoid the hassle of static referencing.
-public class EntityInit {
+public class EntityRegistry {
     public static DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, CupsArsenal.MOD_ID);
 
     public static final RegistryObject<EntityType<BlazeRodArrowEntity>> BLAZEROD_ARROW = ENTITY_TYPES.register("blazerod_arrow",

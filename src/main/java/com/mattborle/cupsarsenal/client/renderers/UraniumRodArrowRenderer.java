@@ -1,4 +1,4 @@
-package com.mattborle.cupsarsenal.client;
+package com.mattborle.cupsarsenal.client.renderers;
 
 import com.mattborle.cupsarsenal.CupsArsenal;
 import com.mattborle.cupsarsenal.entities.UraniumRodArrowEntity;
