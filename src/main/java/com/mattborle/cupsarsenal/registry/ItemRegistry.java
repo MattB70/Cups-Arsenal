@@ -2,6 +2,7 @@ package com.mattborle.cupsarsenal.registry;
 
 import com.mattborle.cupsarsenal.CupsArsenal;
 import com.mattborle.cupsarsenal.items.LauncherItem;
+import com.mattborle.cupsarsenal.items.MagmaSpewerItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +28,12 @@ public class ItemRegistry {
     // Get the item register, so we can tell the game about our items
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, CupsArsenal.MOD_ID);
 
+    // =================================================================================================================
     // Register Rod Launcher with id rod_launcher and reference ROD_LAUNCHER.
     public static final RegistryObject<Item> ROD_LAUNCHER = ITEMS.register("rod_launcher",
             () -> new LauncherItem(new Item.Properties().tab(CreativeTab.instance)));
+
+    // Register Magma Spewer with id magma_spewer and reference MAGMA_SPEWER.
+    public static final RegistryObject<Item> MAGMA_SPEWER = ITEMS.register("magma_spewer",
+            () -> new MagmaSpewerItem(new Item.Properties().tab(CreativeTab.instance)));
 }
