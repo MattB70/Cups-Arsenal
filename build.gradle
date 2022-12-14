@@ -50,6 +50,9 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
             // "SCAN": For mods scan.
@@ -74,6 +77,9 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             property 'forge.logging.markers', 'REGISTRIES'
 
@@ -153,6 +159,10 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.dev"
     }
+    maven {
+        name = "KosmX's maven"
+        url = 'https://maven.kosmx.dev/'
+    }
 }
 
 dependencies {
@@ -161,6 +171,11 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
 
+    //If you don't want to include the library in your jar, remove the include word
+    implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${project.playeranim_version}")
+    //Bendy-lib also has a Forge version:
+    //runtimeOnly fg.deobf("io.github.kosmx.bendy-lib:bendy-lib-forge:${project.bendylib_version}")
+    //Forge JarJar only works on MC 1.19. Do not use JarJar on older version!
 }
 
 jar {
