@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.mattborle.cupsarsenal.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "MixinHeldItem"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "cupsarsenal.mixin-refmap.json"
+}
