@@ -2,37 +2,40 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"animation.model.gun.large.low.idle": {
-			"loop": "hold_on_last_frame",
+			"loop": true,
 			"animation_length": 0.25,
 			"bones": {
 				"rightArm": {
 					"rotation": {
 						"0.0": {
-							"vector": [0, 0, 0]
+							"vector": [-90, 0, 0],
+							"easing": "easeOutBack"
 						},
 						"0.25": {
 							"vector": [-90, 0, 0],
-							"easing": "easeOutBack"
+							"easing": "linear"
 						}
 					}
 				},
 				"leftArm": {
 					"rotation": {
 						"0.0": {
-							"vector": [0, 0, 0]
+							"vector": [-65.85133, 20.70481, 9.00717],
+							"easing": "easeOutBack"
 						},
 						"0.25": {
 							"vector": [-65.85133, 20.70481, 9.00717],
-							"easing": "easeOutBack"
+							"easing": "linear"
 						}
 					},
 					"position": {
 						"0.0": {
-							"vector": [0, 0, 0]
+							"vector": [-1.5, -0.5, -2.25],
+							"easing": "easeOutBack"
 						},
 						"0.25": {
 							"vector": [-1.5, -0.5, -2.25],
-							"easing": "easeOutBack"
+							"easing": "linear"
 						}
 					}
 				}
