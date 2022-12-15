@@ -3,9 +3,12 @@ package com.mattborle.cupsarsenal;
 import com.mattborle.cupsarsenal.registry.EntityRegistry;
 import com.mattborle.cupsarsenal.registry.ItemRegistry;
 import com.mojang.logging.LogUtils;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -19,16 +22,27 @@ public class CupsArsenal
     public CupsArsenal()
     {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(this::setup);
+        modEventBus.addListener(this::commonSetup);
         ItemRegistry.ITEMS.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
+    private void commonSetup(final FMLCommonSetupEvent event)
     {
         // some preinit code
-        LOGGER.info("Cup's Arsenal - Cup, et al.");
+        LOGGER.info("Cup's Arsenal (COMMON)");
+    }
+
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModEvents
+    {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event)
+        {
+            // Some client setup code
+            LOGGER.info("Cup's Arsenal (CLIENT)");
+        }
     }
 
     /*  Everything below is leftovers from example file, keeping for future reference if needed
