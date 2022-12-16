@@ -31,4 +31,10 @@ High Quality Weaponry
     versionRange="[1.18-3.0.56,)"
     ordering="NONE" # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     side="BOTH" # Side this dependency is applied on - BOTH, CLIENT or SERVER
+[[dependencies.cupsarsenal]]
+    modId="playeranimator"
+    mandatory=true
+    versionRange="[0.4.0+1.18,)"
+    ordering="NONE" # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    side="BOTH" # Side this dependency is applied on - BOTH, CLIENT or SERVER
 
