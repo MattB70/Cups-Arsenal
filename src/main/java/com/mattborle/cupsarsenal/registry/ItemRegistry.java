@@ -28,7 +28,7 @@ public class ItemRegistry {
     // Get the item register, so we can tell the game about our items
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, CupsArsenal.MOD_ID);
 
-    // =================================================================================================================
+    // Special Weapons =================================================================================================
     // Register Rod Launcher with id rod_launcher and reference ROD_LAUNCHER.
     public static final RegistryObject<Item> ROD_LAUNCHER = ITEMS.register("rod_launcher",
             () -> new LauncherItem(new Item.Properties().tab(CreativeTab.instance)));
